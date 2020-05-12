@@ -37,6 +37,10 @@ module.exports = appInfo => {
   };
 
   // add your middleware config here
+  config.jwt = {
+    secret: 'egg-api-jwt',
+  };
+  
   config.middleware = [];
   //多出来的配置==========
   config.security = {
@@ -46,9 +50,17 @@ module.exports = appInfo => {
     },
     domainWhiteList: ['http://localhost:8080']
   };
+
   config.cors = {
     origin:'*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  };
+
+  config.qiniu ={
+    AccessKey: 'ckYYxI4xwp2etJ9okRlLO0tfzaSkm9hoQte2XKNu',
+    SecretKey: 't9yqigKlMgw_qmy9lZjyTJZlKPBnSVAkqpciaA6J',
+    buket: 'edu-egg',
+    domain: 'qa3xmeqcq.bkt.clouddn.com'
   };
 
   // add your user config here

@@ -1,4 +1,5 @@
 const Controller = require('egg').Controller;
+const authCodeFunc = require('./../utils/authCode.js');
 
 class AdminController extends Controller{
   async login(){
@@ -11,19 +12,25 @@ class AdminController extends Controller{
       }
     }
     try{
-      await this.ctx.model.Admin.findOne({ where:{phone} }).then( res =>{
-        console.log(res,5555)
-        if(res === null){
-          this.ctx.body ={
-            code: 0,
-            message: '账号密码错误！'
-          }
-        }
-        // console.log( JSON.parse(JSON.stringify(res, null, 4)).phone, 111)
-        if( phone == JSON.parse(JSON.stringify(res, null, 4)).phone ){
+      await this.ctx.model.Admin.findOne({ where:{phone,password} }).then( res =>{
+        // console.log(res,5555)
+        // console.log( JSON.parse(JSON.stringify(res, null, 4)), 111)
+        if( JSON.parse(JSON.stringify(res, null, 4)) ){
+          let auth_Code = phone +'\t'+ password +'\t'+ JSON.parse(JSON.stringify(res, null, 4)).id;
+
+          let token = authCodeFunc(auth_Code,'ENCODE');
+          // console.log(token,875)
+          // console.log(this.ctx.cookies,77777)
+          this.ctx.cookies.set('ac', auth_Code, { maxAge: 24* 60 * 60 * 1000, httpOnly: true });
           this.ctx.body ={
             code: 200,
-            message: '登陆成功！'
+            message: '登陆成功！',
+            token
+          }
+        }else{
+          this.ctx.body ={
+            code: 0,
+            message: '登陆失败,没有此用户!'
           }
         }
       })
@@ -35,6 +42,5 @@ class AdminController extends Controller{
       }
     }
   }
-
 }
 module.exports = AdminController;
