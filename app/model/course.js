@@ -2,7 +2,7 @@
 
 module.exports = app => {
   const { STRING, INTEGER } = app.Sequelize;
-  const Course = app.model.define('course',{
+  const Course = app.model.define('courses',{
     id: { 
       type: INTEGER, 
       primaryKey: true, 
@@ -12,7 +12,15 @@ module.exports = app => {
       type:STRING(255),
       allowNull: false,
     },
-    subtitle: { 
+    short_name: { 
+      type:STRING(255),
+      allowNull: false,
+    },
+    tips:{
+      type:STRING(255),
+      allowNull: false,
+    },
+    description: {
       type:STRING(255),
       allowNull: false,
     },
@@ -20,14 +28,19 @@ module.exports = app => {
       type: INTEGER,
       allowNull: false,
     },
-    description: {
-      type:STRING(255),
-      allowNull: false,
-    },
-    cover: {
+    image_url: {
       type:STRING(255),
       allowNull: false,
     }
+    // ,
+    // created_at:{
+    //   type:DATE(6),
+    //   allowNull: true,
+    // },
+    // updated_at:{
+    //   type:DATE(6),
+    //   allowNull: true,
+    // }
   },{ 
     freezeTableName: true,
     timestamps: false,

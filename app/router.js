@@ -25,4 +25,5 @@ module.exports = app => {
 
   router.get('/admin/course',controller.course.all);  //课程
   router.post('/admin/course',controller.course.insert); //新增课程
+  router.delete('/admin/course/:id',controller.course.delete)
 };
