@@ -10,11 +10,8 @@
 // app/router.js
 module.exports = app => {
   const { router, controller } = app;
-  const csrf = app.middleware.csrf({ threshold: 1024 });
-
-  
+  const csrf = app.middleware.csrf({ threshold: 1024 });  
   router.get('/', controller.home.index);
-  router.get('/news', controller.news.list);
 
 
 
@@ -24,6 +21,13 @@ module.exports = app => {
   router.get('/qiniu-uploadtoken',controller.qiniu.uploadToken);//七牛云上传
 
   router.get('/admin/course',controller.course.all);  //课程
+  router.get('/admin/course/:id',controller.course.single) //课程详情
   router.post('/admin/course',controller.course.insert); //新增课程
-  router.delete('/admin/course/:id',controller.course.delete)
+  router.delete('/admin/course/:id',controller.course.delete)  //删除课程
+
+  router.get('/admin/company',controller.company.all);  //企业
+  router.get('/admin/company/:id',controller.company.single) //企业详情
+  router.post('/admin/company',controller.company.insert); //新增企业
+  router.post('/admin/company/:id',controller.company.update) //修改企业
+  router.delete('/admin/company/:id',controller.company.delete)  //删除企业
 };

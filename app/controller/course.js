@@ -18,6 +18,27 @@ class CourseController extends Controller{
       }
     }
   };
+  async single(){
+    let id = this.ctx.params.id;
+    let data;
+    try{
+     await this.ctx.model.Course.findByPk(id).then( res=>{
+        JSON.parse(JSON.stringify(res, null, 4))
+        data = JSON.parse(JSON.stringify(res, null, 4))
+      })
+      console.log(data)
+      this.ctx.body={
+        code: 200,
+        data: data 
+      }
+    }catch(e){
+      console.log(e)
+      this.ctx.body ={
+        code: 0,
+        message: '服务器错误'
+      }
+    }
+  }
   async insert(){
     // let id = this.ctx.request.body.id;
     let name = this.ctx.request.body.name;
@@ -46,6 +67,9 @@ class CourseController extends Controller{
         message: '服务器错误'
       }
     }
+  };
+  async update(){
+    console.log(123)
   };
   async delete(){
     console.log(12313123123)
