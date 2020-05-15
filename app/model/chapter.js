@@ -8,7 +8,7 @@ module.exports = app => {
       primaryKey: true, 
       autoIncrement: true 
     },
-    chapter_id:{ 
+    course_id:{ 
       type:INTEGER,
       allowNull: false,
     },
@@ -16,18 +16,10 @@ module.exports = app => {
       type:STRING(255),
       allowNull: false,
     },
-    content:{
-      type:STRING(255),
-      allowNull: false,
-    },
-    video_url: {
-      type:STRING(255),
-      allowNull: false,
-    },
     sort:{
-      type: INTEGER,
+      type:INTEGER,
       allowNull: false,
-    }
+    },
     // created_at:{
     //   type:DATE(6),
     //   allowNull: true,

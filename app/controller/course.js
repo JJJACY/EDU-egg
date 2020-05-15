@@ -20,13 +20,10 @@ class CourseController extends Controller{
   };
   async single(){
     let id = this.ctx.params.id;
-    let data;
     try{
-     await this.ctx.model.Course.findByPk(id).then( res=>{
-        JSON.parse(JSON.stringify(res, null, 4))
-        data = JSON.parse(JSON.stringify(res, null, 4))
+      let data = await this.ctx.model.Course.findByPk(id).then( res=>{
+        return JSON.parse(JSON.stringify(res, null, 4)) 
       })
-      console.log(data)
       this.ctx.body={
         code: 200,
         data: data 

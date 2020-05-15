@@ -30,4 +30,8 @@ module.exports = app => {
   router.post('/admin/company',controller.company.insert); //新增企业
   router.post('/admin/company/:id',controller.company.update) //修改企业
   router.delete('/admin/company/:id',controller.company.delete)  //删除企业
+
+  router.get('/admin/chapter',controller.chapter.all); //章
+  router.post('/admin/chapter',controller.chapter.insert); //新增章
+  router.put('/admin/chapter/sort',controller.chapter.sort); //章排序
 };
