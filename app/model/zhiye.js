@@ -1,22 +1,30 @@
 'user strict';
 
 module.exports = app => {
-  const { STRING, INTEGER ,DATE} = app.Sequelize;
-  const Chapter = app.model.define('chapters',{
+  const { STRING, INTEGER, DATE, TEXT} = app.Sequelize;
+  const Zhiye = app.model.define('zhiye',{
     id: { 
       type: INTEGER, 
       primaryKey: true, 
       autoIncrement: true 
     },
-    course_id:{ 
-      type:INTEGER,
-      allowNull: false,
-    },
-    name: { 
+    name:{ 
       type:STRING(255),
       allowNull: false,
     },
-    sort:{
+    sort: { 
+      type:INTEGER,
+      allowNull: false,
+    },
+    image_url: {
+      type:TEXT,
+      allowNull: false,
+    },
+    description: {
+      type:TEXT,
+      allowNull: false,
+    },
+    status: {
       type:INTEGER,
       allowNull: false,
     },
@@ -28,10 +36,9 @@ module.exports = app => {
       type:DATE,
       allowNull: true,
     }
-   
   },{ 
     freezeTableName: true,
     timestamps: false,
   });
-  return Chapter;
+  return Zhiye;
 };

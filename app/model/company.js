@@ -1,7 +1,7 @@
 'user strict';
 
 module.exports = app => {
-  const { STRING, INTEGER } = app.Sequelize;
+  const { STRING, INTEGER,TEXT,DATE } = app.Sequelize;
   const Company = app.model.define('companies',{
     id: { 
       type: INTEGER, 
@@ -25,7 +25,7 @@ module.exports = app => {
       allowNull: false,
     },
     introduction: { 
-      type:STRING(255),
+      type:TEXT,
       allowNull: false,
     },
     contact_name: { 
@@ -37,17 +37,17 @@ module.exports = app => {
       allowNull: false,
     },
     image_url: { 
-      type:STRING(255),
+      type:TEXT,
       allowNull: false,
     },
-    // created_at: { 
-    //   type:DATE(6),
-    //   allowNull: false,
-    // },
-    // updated_at: { 
-    //   type:DATE(6),
-    //   allowNull: false,
-    // },
+    created_at: { 
+      type:DATE,
+      allowNull: false,
+    },
+    updated_at: { 
+      type:DATE,
+      allowNull: false,
+    },
   },{ 
     freezeTableName: true,
     timestamps: false,

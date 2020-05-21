@@ -35,7 +35,7 @@ class CourseController extends Controller{
         message: '服务器错误'
       }
     }
-  }
+  };
   async insert(){
     // let id = this.ctx.request.body.id;
     let name = this.ctx.request.body.name;
@@ -87,6 +87,79 @@ class CourseController extends Controller{
         message: '服务器错误'
       }
     }
-  }
+  };
+  async index(){
+    let id = this.ctx.params.id;
+    try{
+      let Course= await this.ctx.model.Course.findByPk(id).then(res=>{
+        return JSON.parse(JSON.stringify(res,null,4))
+      })
+      if(!Course){
+        this.ctx.body={
+          code:0,
+          message:'请先添加课程！'
+        }
+      }
+      let chapterAll = await this.ctx.model.Chapter.findAll({
+        where:{course_id:Course.id},
+        order: [['sort','ASC']]
+      }).then(res=>{
+        return JSON.parse(JSON.stringify(res,null,4))
+      })
+      await Promise.all(chapterAll.map(async data=>{
+        data.sectionAll = await this.ctx.model.Section.findAll({
+          where:{chapter_id: data.id},
+          order: [['sort','ASC']]
+        }).then(res=>{
+          return JSON.parse(JSON.stringify(res,null,4))
+        })
+      }) )
+      this.ctx.body={
+        code: 200,
+        data: chapterAll
+      }
+    }catch(e){
+      console.log(e)
+      this.ctx.body ={
+        code: 0,
+        message: '服务器错误'
+      }
+    }
+  };
+  // async sort(){
+  //   console.log(123)
+  //   let params = this.ctx.request.body.params;
+  //   console.log(params)
+  //   try{
+  //     await Promise.all(params.map(async (data,index)=>{
+  //       console.log(data)
+  //       await this.ctx.model.Chapter.update(
+  //         {sort: index},
+  //         { where:{id: data.id} });
+  //       await Promise.all(data.sectionAll.map( async( arr,idx)=>{
+  //         // console.log(arr)
+  //         await this.ctx.model.Section.update(
+  //           {sort: idx,chapter_id:data.id},
+  //           { where:
+  //             {
+  //               id: arr.id
+  //             } 
+  //           }
+  //         )
+  //       }))
+        
+  //     }))
+  //     this.ctx.body={
+  //       code: 200,
+  //       message:'成功了'
+  //     }
+  //   }catch(e){
+  //     console.log(1123,e)
+  //     this.ctx.body={
+  //       code:0,
+  //       message:'服务器错误'
+  //     }
+  //   }
+  // }
 }
 module.exports = CourseController
