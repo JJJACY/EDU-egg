@@ -43,6 +43,7 @@ class CourseController extends Controller{
     let tips = this.ctx.request.body.tips;
     let description = this.ctx.request.body.description;
     let image_url = this.ctx.request.body.image_url;
+    let created_at = thisc.ctx.request.body.created_at;
     if(!name || !short_name || !tips || !description || !image_url){
       this.ctx.body ={
         code:0,
@@ -51,7 +52,7 @@ class CourseController extends Controller{
     }
     try{
       await this.ctx.model.Course.create({
-        name,short_name,tips,description,image_url,status:0
+        name,short_name,tips,description,image_url,created_at,status:0
       })
       this.ctx.body ={
         code:200,

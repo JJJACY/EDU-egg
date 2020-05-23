@@ -3,49 +3,31 @@
 const Controller = require('egg').Controller;
 
 class ChapterController extends Controller {
-  async all() {
+  async sort(){
+    let params = this.ctx.request.body.params;
     try{
-      let data = await this.ctx.model.Chapter.findAll({
-        order: [['sort','DESC']]
-      }).then( res=>{
-        console.log(res)
-        return JSON.parse(JSON.stringify(res, null, 4))
-      })
-      this.ctx.body ={
-        code: 200,
-        data: data
-      }
-    }catch(e){
-      console.log(e)
-      this.ctx.body ={
-        code: 0,
-        message: '服务器错误'
-      }
-    }
-  };
-  async single(){
-    let id = this.ctx.params.id;
-    try{
-      let chapters = await this.ctx.model.Chapter.findAll({ 
-        where:{
-          course_id: id
-        },
-        order: [['sort','DESC']]
-      }).then(res=>{
-        return JSON.parse(JSON.stringify( res,null,4))
-      })
-      this.ctx.body = {
-        code: 200,
-        data: chapters
-      }
-    }catch(e){
-      console.log(e)
+      Promise.all(params.map(async (data,index)=>{
+        await this.ctx.model.Chapter.update(
+          {sort: index},
+          { where:{id: data.id} })
+          Promise.all(data.sectionAll.map( async( arr,idx)=>{
+          await this.ctx.model.Section.update(
+            {sort: idx,chapter_id:data.id},
+            { where: {id: arr.id} })
+        }))
+      }))
       this.ctx.body={
-        code: 0,
+        code: 200,
+        message:'成功了'
+      }
+    }catch(e){
+      console.log(1123,e)
+      this.ctx.body={
+        code:0,
         message:'服务器错误'
       }
     }
-  }
+  };
   async insert() {
     let course_id = this.ctx.request.body.course_id;
     let name = this.ctx.request.body.name;
@@ -74,37 +56,6 @@ class ChapterController extends Controller {
     }
     
   };
-  async sort(){
-    let params = this.ctx.request.body.params;
-    try{
-      Promise.all(params.map(async (data,index)=>{
-        await this.ctx.model.Chapter.update(
-          {sort: index},
-          { where:{id: data.id} })
-          Promise.all(data.sectionAll.map( async( arr,idx)=>{
-          await this.ctx.model.Section.update(
-            {sort: idx,chapter_id:data.id},
-            { where:
-              {
-                id: arr.id
-              } 
-            }
-          )
-        }))
-        
-      }))
-      this.ctx.body={
-        code: 200,
-        message:'成功了'
-      }
-    }catch(e){
-      console.log(1123,e)
-      this.ctx.body={
-        code:0,
-        message:'服务器错误'
-      }
-    }
-  }
   async update() {
     let id = this.ctx.params.id;
     let name = this.ctx.request.body.name;
