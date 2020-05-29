@@ -13,11 +13,8 @@ class AdminController extends Controller{
     }
     try{
       await this.ctx.model.Admin.findOne({ where:{phone,password} }).then( res =>{
-        // console.log(res,5555)
-        // console.log( JSON.parse(JSON.stringify(res, null, 4)), 111)
         if( JSON.parse(JSON.stringify(res, null, 4)) ){
           let auth_Code = phone +'\t'+ password +'\t'+ JSON.parse(JSON.stringify(res, null, 4)).id;
-
           let token = authCodeFunc(auth_Code,'ENCODE');
           // console.log(token,875)
           // console.log(this.ctx.cookies,77777)

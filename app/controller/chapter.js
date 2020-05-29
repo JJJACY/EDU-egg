@@ -54,7 +54,6 @@ class ChapterController extends Controller {
         message: '服务器错误'
       }
     }
-    
   };
   async update() {
     let id = this.ctx.params.id;

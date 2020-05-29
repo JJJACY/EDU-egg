@@ -14,9 +14,10 @@ module.exports = app => {
   router.get('/', controller.home.index);
 
 
-
-  router.post('/admin/login',controller.admin.login);  //管理员登陆
+  router.post('/admin/login',controller.manager.login); //
+  // router.post('/admin/login',controller.admin.login);  //管理员登陆
   router.post('/sms/send',controller.auth.send);
+  router.post('/admin/authority',controller.manager.authority) //鉴权
 
   router.get('/qiniu-uploadtoken',controller.qiniu.uploadToken);//七牛云上传
   //课程相关 API
@@ -77,4 +78,29 @@ module.exports = app => {
   router.get('/admin/stack/:id',controller.stack.single); 
   router.post('/admin/stack',controller.stack.insert);  //新增技能
 
+  //题库
+  router.get('/admin/skill/question',controller.skill.all); //题目列表
+  router.post('/admin/skill/question',controller.skill.insert) //新增题目
+  router.get('/admin/skill/question/:id',controller.skill.single); //题目详情
+  router.delete('/admin/skill/question/:id',controller.skill.delete) //删除题目
+
+
+
+  //管理员。。。。。。
+  router.get('/admin/manager/permissiongps',controller.permissiongroups.all); // all权限组
+  // router.get('/admin/manager/permission',controller.permission.all) //权限
+  // router.get('/admin/manager/permissiongpss',controller.permissiongroups.alldata)
+  
+  router.get("/admin/role",controller.role.all); //角色列表
+  router.get('/admin/role/:id',controller.role.single); //角色详情
+  router.post('/admin/role',controller.role.insert);  //角色新增 
+  router.put('/admin/role/:id',controller.role.update); //角色修改
+  router.delete('/admin/role/:id',controller.role.delete); //角色删除
+  
+
+  router.get('/admin/manager',controller.manager.all); //管理员列表
+  router.get('/admin/manager/:id',controller.manager.single);//管理员详情
+  router.post('/admin/manager',controller.manager.insert); //管理员增加
+  router.put('/admin/manager/:id',controller.manager.update); //管理员修改
+  router.delete('/admin/manager/:id',controller.manager.delete); //删除管理员
 };
