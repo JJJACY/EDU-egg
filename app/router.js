@@ -103,4 +103,20 @@ module.exports = app => {
   router.post('/admin/manager',controller.manager.insert); //管理员增加
   router.put('/admin/manager/:id',controller.manager.update); //管理员修改
   router.delete('/admin/manager/:id',controller.manager.delete); //删除管理员
+
+  //广告物料相关
+  router.post('/admin/advertise',controller.advertise.insert); //广告新增
+  router.get('/admin/advertise',controller.advertise.all); //获取广告位
+  router.get('/admin/advertise/:id',controller.advertise.single); //广告位置详情
+  router.put('/admin/advertise/:id',controller.advertise.update); //广告位修改
+  router.delete('/admin/advertise/:id',controller.advertise.delete); //广告位删除
+
+  router.post('/admin/material',controller.material.insert); //新增物料
+  router.get('/admin/material',controller.material.all); //物料
+  router.get('/admin/material/:id',controller.material.single); //物料详情
+  router.put('/admin/material/:id',controller.material.update);//物料修改
+  router.delete('/admin/material/:id',controller.material.delete);//删除物料
+
+  router.post('/admin/advertises/material',controller.advertisematerial.insert); //新增广告物料关联
+  router.get('/admin/advertises/material/:id',controller.advertisematerial.single); //广告物料关联列表
 };
