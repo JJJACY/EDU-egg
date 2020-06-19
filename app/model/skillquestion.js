@@ -24,7 +24,7 @@ module.exports = app => {
       type:TEXT,
       allowNull: false,
     },
-    currect: {
+    correct: {
       type:TEXT,
       allowNull: false,
     },

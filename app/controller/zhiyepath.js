@@ -106,7 +106,26 @@ class zhiyePathController extends Controller {
       }
     }
     
-  }
+  };
+  // async single(){
+  //   let id = this.ctx.params.id;
+  //   try{
+  //     let path = await this.ctx.model.Zhiyepath.findAll({
+  //       where:{id}
+  //     })
+  //     console.log(path)
+  //     this.ctx.body ={
+  //       code:200,
+  //       data: path
+  //     }
+  //   }catch(e){
+  //     console.log(e)
+  //     this.ctx.body={
+  //       code:0,
+  //       message:'服务器错误'
+  //     }
+  //   }
+  // }
 }
 
 module.exports = zhiyePathController;

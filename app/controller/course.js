@@ -43,7 +43,7 @@ class CourseController extends Controller{
     let tips = this.ctx.request.body.tips;
     let description = this.ctx.request.body.description;
     let image_url = this.ctx.request.body.image_url;
-    let created_at = thisc.ctx.request.body.created_at;
+    let created_at = this.ctx.request.body.created_at;
     if(!name || !short_name || !tips || !description || !image_url){
       this.ctx.body ={
         code:0,
@@ -124,6 +124,25 @@ class CourseController extends Controller{
       this.ctx.body ={
         code: 0,
         message: '服务器错误'
+      }
+    }
+  };
+  async newclass(){
+    try{
+      let course = await this.ctx.model.Course.findAll({ order: [['created_at', 'DESC']] }).
+      then( res=>{
+        return JSON.parse(JSON.stringify(res, null, 4)) 
+      })
+      // console.log(course)
+      let newclass = course.splice(0,4)
+      this.ctx.body ={
+        code:200,
+        data: newclass
+      }
+    }catch(e){
+      this.ctx.body={
+        code:0,
+        message:'服务器错误'
       }
     }
   };

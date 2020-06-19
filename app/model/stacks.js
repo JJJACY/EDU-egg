@@ -20,10 +20,10 @@ module.exports = app => {
       type:TEXT,
       allowNull: false,
     },
-    tag_line: {
-      type:TEXT,
-      allowNull: false,
-    },
+    // tag_line: {
+    //   type:TEXT,
+    //   allowNull: false,
+    // },
     description: {
       type:TEXT,
       allowNull: false,

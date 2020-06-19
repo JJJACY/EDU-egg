@@ -16,7 +16,7 @@ module.exports = app => {
 
   router.post('/admin/login',controller.manager.login); //
   // router.post('/admin/login',controller.admin.login);  //管理员登陆
-  router.post('/sms/send',controller.auth.send);
+  router.post('/wxlogin/send',controller.auth.send); //wx获取token
   router.post('/admin/authority',controller.manager.authority) //鉴权
 
   router.get('/qiniu-uploadtoken',controller.qiniu.uploadToken);//七牛云上传
@@ -76,13 +76,18 @@ module.exports = app => {
   //技能相关 API
   router.get('/admin/stack',controller.stack.all);  //技能
   router.get('/admin/stack/:id',controller.stack.single); 
+  router.get('/admin/stackstatus',controller.stack.findstatus); //状态打开
   router.post('/admin/stack',controller.stack.insert);  //新增技能
+  router.post('/admin/stack/pagina',controller.stack.pagina); //技能分页
+
 
   //题库
   router.get('/admin/skill/question',controller.skill.all); //题目列表
   router.post('/admin/skill/question',controller.skill.insert) //新增题目
   router.get('/admin/skill/question/:id',controller.skill.single); //题目详情
   router.delete('/admin/skill/question/:id',controller.skill.delete) //删除题目
+  router.post('/admin/skill/pagina',controller.skill.pagina); //题目分页
+  router.get('/admin/stack/:id/random',controller.skill.similar); //随机20题
 
 
 
@@ -119,4 +124,19 @@ module.exports = app => {
 
   router.post('/admin/advertises/material',controller.advertisematerial.insert); //新增广告物料关联
   router.get('/admin/advertises/material/:id',controller.advertisematerial.single); //广告物料关联列表
+
+  router.post('/admin/sms/send',controller.smslog.smsSend); //获取验证码
+  router.post('/admin/sms/login',controller.smslog.smslogin); //登陆
+
+
+
+  router.post('/admin/user/user-info',controller.user.single); //单个用户信息
+  router.put('/admin/user/user-info/:id',controller.user.update); //修改用户信息
+  router.put('/admin/user/phone-bind',controller.user.bindphone); //手机绑定
+  router.put('/admin/user/phone-unbind',controller.user.unbindphone); //手机解绑
+  router.put('/admin/user/wechat-unbind',controller.user.unbindwx); //wx解绑
+  // router.put('/admin/user/wechat-bind',controller.auth.bindwx);// 微信绑定
+
+  router.get('/admin/course-recommand',controller.course.newclass); //首页课程推荐
+
 };

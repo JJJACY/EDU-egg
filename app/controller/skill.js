@@ -3,12 +3,16 @@ const Controller = require('egg').Controller;
 class SkillController extends Controller {
   async all(){
     try{
-      let skilldata = await this.ctx.model.Skillquestion.findAll().then(res=>{
+      let all = await this.ctx.model.Skillquestion.findAll()
+      let total = all.length
+      let  skill= await this.ctx.model.Skillquestion.findAll({ offset: 0, limit: 10 }).
+      then(res=>{
         return JSON.parse(JSON.stringify(res, null, 4))
       })
       this.ctx.body ={
         code: 200,
-        data: skilldata
+        data: skill,
+        total: total
       }
     }catch(e){
       console.log(e)
@@ -18,6 +22,26 @@ class SkillController extends Controller {
       }
     }
   };
+  async pagina(){
+    let nowPage = this.ctx.request.body.nowPage;
+    console.log(nowPage)
+    try{
+      let offset = nowPage*10 - 10;
+      let skill =await this.ctx.model.Skillquestion.findAll({ offset: offset, limit: 10 }).then(res=>{
+        return JSON.parse(JSON.stringify(res, null, 4))
+      })
+      this.ctx.body ={
+        code:200,
+        data: skill
+      }
+    }catch(e){
+      console.log(e)
+      this.ctx.body ={
+        code: 0,
+        message: '服务器错误'
+      }
+    }
+  }
   async insert(){
     let stem = this.ctx.request.body.question;
     let stack_id = this.ctx.request.body.stack_id;
@@ -77,6 +101,29 @@ class SkillController extends Controller {
       this.ctx.body ={
         code: 200,
         message: '删除成功!'
+      }
+    }catch(e){
+      console.log(e)
+      this.ctx.body ={
+        code:0,
+        message:'服务器错误'
+      }
+    }
+  }
+  async similar(){
+    let stack_id = this.ctx.params.id;
+    try{
+      let question = await this.ctx.model.Skillquestion.findAll({
+        order: [['id', 'ASC']]
+      },{ where:{stack_id}}).then(res=>{
+        return JSON.parse(JSON.stringify(res, null, 4))
+      })
+      let index =  parseInt(Math.random().toString().slice(-20)*100)
+      let arr = question.slice(index,index+20)
+      console.log(arr)
+      this.ctx.body ={
+        code:200,
+        data: arr
       }
     }catch(e){
       console.log(e)

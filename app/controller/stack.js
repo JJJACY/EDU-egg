@@ -3,12 +3,16 @@ const Controller = require('egg').Controller;
 class StackController extends Controller {
   async all(){
     try{
-      let stackdata = await this.ctx.model.Stacks.findAll().then(res=>{
+      let all = await this.ctx.model.Stacks.findAll()
+      let total = all.length
+      let stackdata = await this.ctx.model.Stacks.findAll({ offset: 0, limit: 10 }).
+      then(res=>{
         return JSON.parse(JSON.stringify(res, null, 4))
       })
       this.ctx.body ={
         code: 200,
-        data: stackdata
+        data: stackdata,
+        total: total
       }
     }catch(e){
       console.log(e)
@@ -65,8 +69,41 @@ class StackController extends Controller {
       }
     }
   };
-  async sort() {
-    
+  async pagina() {
+    let nowPage = this.ctx.request.body.nowPage;
+    try{
+      let offset = nowPage*10 - 10;
+      let stack =await this.ctx.model.Stacks.findAll({ offset: offset, limit: 10 }).then(res=>{
+        return JSON.parse(JSON.stringify(res, null, 4))
+      })
+      this.ctx.body ={
+        code:200,
+        data: stack
+      }
+    }catch(e){
+      console.log(e)
+      this.ctx.body ={
+        code: 0,
+        message: '服务器错误'
+      }
+    }
+  };
+  async findstatus(){
+    try{
+      let stack = await this.ctx.model.Stacks.findAll({
+        where:{ status:1 }
+      })
+      this.ctx.body ={
+        code:200,
+        data: stack
+      }
+    }catch(e){
+      console.log(e)
+      this.ctx.body ={
+        code:200,
+        message:'服务器错误！'
+      }
+    }
   }
 }
 

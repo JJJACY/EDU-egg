@@ -14,15 +14,15 @@ class QiniuController extends Controller {
       console.log(mac ,11111111)
       
       var options = {
-        scope: 'edu-egg',
+        scope: 'edu-eggv2',
       };
       var putPolicy = new qiniu.rs.PutPolicy(options);
       var uploadToken=putPolicy.uploadToken(mac);
-      // console.log(uploadToken)
+      console.log(uploadToken)
 
       this.ctx.body ={
         token:uploadToken,
-        domain:'http://qa3xmeqcq.bkt.clouddn.com'
+        domain:'http://qbw9k27qh.bkt.clouddn.com'
       }
       // res.json({
       //   token:uploadToken,

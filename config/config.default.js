@@ -60,8 +60,21 @@ module.exports = appInfo => {
     AccessKey: 'ckYYxI4xwp2etJ9okRlLO0tfzaSkm9hoQte2XKNu',
     SecretKey: 't9yqigKlMgw_qmy9lZjyTJZlKPBnSVAkqpciaA6J',
     buket: 'edu-egg',
-    domain: 'qa3xmeqcq.bkt.clouddn.com'
+    domain: 'qbw9k27qh.bkt.clouddn.com'
   };
+
+  config.aliSMS = {
+    accessKeyId:'LTAI4FbccUoZCvutZu4byYFf',
+    secretAccessKey:'NAVReeycr6iie3fujlIX7KDKL9xEQj',
+    regionId:'cn-hangzhou',
+    TemplateCode:'SMS_173660228',
+    SignName:'扎克斯'
+  }
+
+  config.wechat ={
+    appid:'wxf31cb4f589ed68c3',
+    secret:'69c8c3175f0db105541943aa5f3f45dd'
+  }
 
   // add your user config here
   const userConfig = {
